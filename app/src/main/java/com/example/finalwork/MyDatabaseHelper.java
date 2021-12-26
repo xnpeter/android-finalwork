@@ -25,6 +25,8 @@ class MyDatabaseHelper extends SQLiteOpenHelper {
     private static final String KEY_AMOUNT = "amount";
     private static final String KEY_DATE = "date";
     private static final String KEY_NOTE = "note";
+    private static final String KEY_INCOME = "income";
+    private static final String KEY_DELETED = "deleted";
 
     MyDatabaseHelper(@Nullable Context context) {
         super(context, DB_NAME, null, DB_VERSION);
@@ -39,7 +41,9 @@ class MyDatabaseHelper extends SQLiteOpenHelper {
                 KEY_TYPE + " TEXT, " +
                 KEY_AMOUNT + " TEXT, " +
                 KEY_DATE + " TEXT, " +
-                KEY_NOTE + " TEXT);";
+                KEY_NOTE + " TEXT, " +
+                KEY_INCOME + " TEXT, " +
+                KEY_DELETED + " TEXT);";
         db.execSQL(DB_CREATE);//创建表
     }
 
@@ -59,6 +63,7 @@ class MyDatabaseHelper extends SQLiteOpenHelper {
         cv.put(KEY_AMOUNT,amount);
         cv.put(KEY_DATE,date);
         cv.put(KEY_NOTE,note);
+        cv.put(KEY_DELETED,"false");
         long result = db.insert(DB_TABLE,null,cv);
 //        如果成功则显示相应Toast，失败亦然
         if (result == -1) {
@@ -87,21 +92,31 @@ class MyDatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    //读取全部数据
+    //读取全部未删除的可见数据
     Cursor readAllData(){
         String query = "SELECT * FROM " + DB_TABLE;
+        //String params = "deleted=?";
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = null;
         if(db != null){
-            cursor = db.rawQuery(query, null);
+            cursor = db.rawQuery(query,null);
         }
         return cursor;
     }
 
     //将数据放入回收站，标为删除状态
     void deleteOneRow(String row_id) {
-        Toast.makeText(context, "删除按钮按下,删除功能还没写", Toast.LENGTH_SHORT).show();
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
 
+        cv.put(KEY_DELETED,"true");
+        long result = db.update(DB_TABLE, cv, "_id=?", new String[]{row_id});
+//        如果成功则显示相应Toast，失败亦然
+        if (result == -1) {
+            Toast.makeText(context, "已删除", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context, "删除失败", Toast.LENGTH_SHORT).show();
+        }
     }
 }

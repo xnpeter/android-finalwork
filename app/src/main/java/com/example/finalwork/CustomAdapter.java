@@ -51,6 +51,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
         holder.txt_amount.setText(String.valueOf(bill_amount.get(position)));
         holder.txt_date.setText(String.valueOf(bill_date.get(position)));
         holder.txt_note.setText(String.valueOf(bill_note.get(position)));
+
         //Recyclerview onClickListener
         holder.mainLayout.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -98,4 +98,10 @@ class MyDatabaseHelper extends SQLiteOpenHelper {
         }
         return cursor;
     }
+
+    //将数据放入回收站，标为删除状态
+    void deleteOneRow(String row_id) {
+        Toast.makeText(context, "删除按钮按下,删除功能还没写", Toast.LENGTH_SHORT).show();
+
+    }
 }

@@ -1,8 +1,10 @@
 package com.example.finalwork;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -13,7 +15,7 @@ import android.widget.Toast;
 public class UpdateActivity extends AppCompatActivity {
 
     EditText inputType, inputAmount, inputDate, inputNote;
-    Button updateButton;
+    Button updateButton, deleteButton;
     String id, type, amount, date, note;
 
     @Override
@@ -27,9 +29,11 @@ public class UpdateActivity extends AppCompatActivity {
         inputNote = findViewById(R.id.editTextNote2);
 
         updateButton = findViewById(R.id.update_button);
+        deleteButton = findViewById(R.id.delete_button);
 
         //        获取并设置edittext内容
         getAndSetIntentData();
+
 
         updateButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,8 +50,16 @@ public class UpdateActivity extends AppCompatActivity {
             }
         });
 
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                confirmDialog();
+            }
+        });
+
     }
 
+    //获取并设置此界面的EditText
     void getAndSetIntentData() {
         if (getIntent().hasExtra("type") && getIntent().hasExtra("amount") &&
                 getIntent().hasExtra("date") && getIntent().hasExtra("note")) {
@@ -65,5 +77,27 @@ public class UpdateActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "No data.", Toast.LENGTH_SHORT).show();
         }
+    }
+
+//    在删除时弹出确认对话框
+    void confirmDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("确认删除");
+        builder.setMessage("您确认要删除此条账单吗？\n删除的账单可在回收站中找回");
+        builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                MyDatabaseHelper myDB = new MyDatabaseHelper(UpdateActivity.this);
+                myDB.deleteOneRow(id);
+                finish();
+            }
+        });
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+        builder.create().show();
     }
 }

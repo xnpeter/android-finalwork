@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionButton buttonAdd;
 
     MyDatabaseHelper myDB;
-    ArrayList<String> bill_id, bill_type, bill_amount, bill_date, bill_note;
+    ArrayList<String> bill_id, bill_type, bill_amount, bill_date, bill_note, bill_deleted;
     CustomAdapter customAdapter;
 
     @Override
@@ -45,8 +45,11 @@ public class MainActivity extends AppCompatActivity {
         bill_amount = new ArrayList<>();
         bill_date = new ArrayList<>();
         bill_note = new ArrayList<>();
+        bill_deleted = new ArrayList<>();
 
         storeDataInArrays();
+        //if (bill_deleted.get())
+        //将数据传入Adapter，最终显示
         customAdapter = new CustomAdapter(MainActivity.this, this, bill_id, bill_type, bill_amount, bill_date, bill_note);
         recyclerView.setAdapter(customAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
@@ -62,18 +65,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
+    //将数据从数据可存放到Array中
     void storeDataInArrays() {
         Cursor cursor = myDB.readAllData();
         if (cursor.getCount() == 0) {
             Toast.makeText(this, "No Data.", Toast.LENGTH_SHORT).show();
         } else {
             while (cursor.moveToNext()) {
-                bill_id.add(cursor.getString(0));
-                bill_type.add(cursor.getString(1));
-                bill_amount.add(cursor.getString(2));
-                bill_date.add(cursor.getString(3));
-                bill_note.add(cursor.getString(4));
+                //如果“deleted”数据（也就是序号为6）为false，就将其他数据赋予Array，送入Adapter
+                if (cursor.getString(6).equals("false")) {
+                    bill_id.add(cursor.getString(0));
+                    bill_type.add(cursor.getString(1));
+                    bill_amount.add(cursor.getString(2));
+                    bill_date.add(cursor.getString(3));
+                    bill_note.add(cursor.getString(4));
+                }
             }
         }
     }

@@ -114,9 +114,9 @@ class MyDatabaseHelper extends SQLiteOpenHelper {
         long result = db.update(DB_TABLE, cv, "_id=?", new String[]{row_id});
 //        如果成功则显示相应Toast，失败亦然
         if (result == -1) {
-            Toast.makeText(context, "已删除", Toast.LENGTH_SHORT).show();
-        } else {
             Toast.makeText(context, "删除失败", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context, "已删除", Toast.LENGTH_SHORT).show();
         }
     }
 }

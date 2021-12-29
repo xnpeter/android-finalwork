@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Toast;
 
@@ -65,6 +67,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+
+
     //将数据从数据可存放到Array中
     void storeDataInArrays() {
         Cursor cursor = myDB.readAllData();
@@ -82,6 +86,12 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
+        }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_right, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 }
 

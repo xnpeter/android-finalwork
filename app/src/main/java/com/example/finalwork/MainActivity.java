@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, AddActivity.class);
                 startActivity(intent);
+                //overridePendingTransition(R.anim.slide_in_up,R.anim.slide_out_down);
             }
         });
 
@@ -99,7 +100,15 @@ public class MainActivity extends AppCompatActivity {
 //            customAdapter.RemoveItem(position);
 //            customAdapter.notifyItemRemoved(position);
 //            customAdapter.notifyItemChanged(position);
-            recreate();
+//            Intent intent = new Intent(MainActivity.this, MainActivity.class);
+//            startActivity(intent);
+//            finish();
+            startActivity(getIntent());
+            overridePendingTransition( 0, 0);
+            finish();
+            overridePendingTransition( 0, 0);
+
+            //recreate();
         }
     };
 
@@ -120,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
         int count = 0;
         Cursor cursor = myDB.readAllData();
         if (cursor.getCount() == 0) {
-            Toast.makeText(this, "No data", Toast.LENGTH_SHORT).show();
+
         } else {
             while (cursor.moveToNext()) {
                 //如果“deleted”数据（也就是序号为6）为false，就将其他数据赋予Array，送入Adapter
@@ -178,7 +187,10 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialogInterface, int i) {
                 MyDatabaseHelper myDB = new MyDatabaseHelper(MainActivity.this);
                 myDB.deleteAllData();
-                recreate();
+                Intent intent = new Intent(MainActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+                //recreate();
             }
         });
         builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {

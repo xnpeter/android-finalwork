@@ -1,11 +1,19 @@
 package com.example.finalwork;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -26,6 +34,10 @@ public class TrashbinActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recyclerView);
 
+        //滑动item需要的
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
+
         myDB = new MyDatabaseHelper(TrashbinActivity.this);
         bill_id = new ArrayList<>();
         bill_type = new ArrayList<>();
@@ -42,7 +54,51 @@ public class TrashbinActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(TrashbinActivity.this));
     }
 
-    //只显示被删除的数据
+    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            return false;
+        }
+
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+
+            int position = viewHolder.getAdapterPosition();
+            String  id;
+
+//            bill_type.remove(position);
+//            bill_amount.remove(position);
+//            bill_date.remove(position);
+//            bill_note.remove(position);
+
+            id = bill_id.get(position);
+            MyDatabaseHelper myDB = new MyDatabaseHelper(TrashbinActivity.this);
+            myDB.recycleOneRow(id);
+
+//            customAdapter.RemoveItem(position);
+//            customAdapter.notifyItemRemoved(position);
+//            customAdapter.notifyItemChanged(position);
+            recreate();
+        }
+    };
+
+    //        创建右上角菜单
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.trashbin_menu_right, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.cleanDeleteAll) {
+            confirmDialog();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    //将数据放入Array，然后显示
     void storeDataInArrays() {
         int count = 0;
         Cursor cursor = myDB.readAllData();
@@ -61,5 +117,27 @@ public class TrashbinActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    //弹出“全部删除”确认框
+    void confirmDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("确认删除");
+        builder.setMessage("您确认要永久清除全部账单吗？\n清除的账单不可找回");
+        builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                MyDatabaseHelper myDB = new MyDatabaseHelper(TrashbinActivity.this);
+                myDB.cleanAllDeletedData();
+                recreate();
+            }
+        });
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+        builder.create().show();
     }
 }

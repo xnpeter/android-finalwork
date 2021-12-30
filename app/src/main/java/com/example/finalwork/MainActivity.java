@@ -4,9 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.ClipData;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -44,6 +46,10 @@ public class MainActivity extends AppCompatActivity {
         empty_imageView = findViewById(R.id.empty_imageView);
         no_data = findViewById(R.id.no_data);
 
+        //滑动item需要的
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
+
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -67,6 +73,35 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(customAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
     }
+
+    //滑动item
+    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            return false;
+        }
+
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+
+            int position = viewHolder.getAdapterPosition();
+            String  id;
+
+//            bill_type.remove(position);
+//            bill_amount.remove(position);
+//            bill_date.remove(position);
+//            bill_note.remove(position);
+
+            id = bill_id.get(position);
+            MyDatabaseHelper myDB = new MyDatabaseHelper(MainActivity.this);
+            myDB.deleteOneRow(id);
+
+//            customAdapter.RemoveItem(position);
+//            customAdapter.notifyItemRemoved(position);
+//            customAdapter.notifyItemChanged(position);
+            recreate();
+        }
+    };
 
     //在返回时重新加载，刷新activity
     @Override
@@ -120,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-//    当菜单被选中
+//    右上角菜单内容
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {

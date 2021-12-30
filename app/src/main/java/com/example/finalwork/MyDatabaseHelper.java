@@ -120,7 +120,22 @@ class MyDatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    //删除主页上的全部数据
+    //将数据从回收站收回，标为not deleted状态
+    void recycleOneRow(String row_id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        cv.put(KEY_DELETED,"false");
+        long result = db.update(DB_TABLE, cv, "_id=?", new String[]{row_id});
+//        如果成功则显示相应Toast，失败亦然
+        if (result == -1) {
+            Toast.makeText(context, "删除失败", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context, "已找回", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    //删除主页上的全部数据（放入回收站）
     void deleteAllData() {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -132,6 +147,21 @@ class MyDatabaseHelper extends SQLiteOpenHelper {
             Toast.makeText(context, "删除失败", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(context, "已全部删除", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    //删除主页上的全部数据（放入回收站）
+    void cleanAllDeletedData() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+
+        long result = db.delete(DB_TABLE, "deleted=?", new String[]{"true"});
+//        如果成功则显示相应Toast，失败亦然
+        if (result == -1) {
+            Toast.makeText(context, "清除失败", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context, "已全部清除", Toast.LENGTH_SHORT).show();
         }
     }
 }

@@ -56,6 +56,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
         holder.txt_date.setText(String.valueOf(bill_date.get(position)));
         holder.txt_note.setText(String.valueOf(bill_note.get(position)));
 
+
         //Recyclerview onClickListener
         holder.mainLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,9 +94,19 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
             mainLayout = itemView.findViewById(R.id.mainLayout);
 
             //加载动画
-            translate_anim = AnimationUtils.loadAnimation(context, R.anim.translate_amin);
+            //translate_anim = AnimationUtils.loadAnimation(context, R.anim.translate_amin);
             //设置动画
-            mainLayout.setAnimation(translate_anim);
+            //mainLayout.setAnimation(translate_anim);
         }
     }
+
+    public void RemoveItem(int position) {
+        bill_type.remove(position);
+        bill_amount.remove(position);
+        bill_date.remove(position);
+        bill_note.remove(position);
+
+
+    }
+
 }

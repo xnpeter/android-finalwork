@@ -5,5 +5,7 @@
 
     <item android:id="@+id/deleteAll"
         android:title="删除全部" />
+    <item android:id="@+id/trashBin"
+        android:title="回收站"/>
 
 </menu>

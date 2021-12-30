@@ -7,4 +7,14 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="yellow_500">#FFDE03</color>
+    <color name="blue_300">#64B5F6</color>
+    <color name="blue_500">#2196F3</color>
+    <color name="cyan_200">#80DEEA</color>
+    <color name="cyan_400">#26C6DA</color>
+    <color name="cyan_tg">#517da2</color>
+    <color name="cyan_tg_dark">#426382</color>
+    <color name="cyan_add_button">#66a9e0</color>
+    <color name="cyan_other_button">#50a7ea</color>
+    <color name="error_red">#dc7e7d</color>
 </resources>

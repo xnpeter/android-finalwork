@@ -78,25 +78,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    //    统计未删除状态的记录个数，如果为0则显示相应信息
-//    void countShowedData() {
-//        int count = 0;
-//        Cursor cursor = myDB.readAllData();
-//        while (cursor.moveToNext()) {
-//            if (cursor.getString(6).equals("true")) {
-//                count++;
-//            }
-//        }
-//        if (count == 0) {
-//            //如果没有数据，将“没有账单”的图片和文字设为可见
-//            empty_imageView.setVisibility(View.VISIBLE);
-//            no_data.setVisibility(View.VISIBLE);
-//        }else//如果有数据，则将“没有账单”的图片和文字设为不可见
-//            empty_imageView.setVisibility(View.GONE);
-//            no_data.setVisibility(View.GONE);
-//    }
-
-
 
     //将数据从数据可存放到Array中
 //    统计未删除状态的记录个数，如果为0则显示相应信息
@@ -145,6 +126,9 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.deleteAll) {
             confirmDialog();
+        } else if (item.getItemId() == R.id.trashBin) {
+            Intent intent = new Intent(MainActivity.this, TrashbinActivity.class);
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }

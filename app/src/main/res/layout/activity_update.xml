@@ -7,7 +7,6 @@
     tools:context=".UpdateActivity">
 
     <Spinner
-        android:visibility="invisible"
         android:id="@+id/spinnerBillType2"
         android:layout_width="210dp"
         android:layout_height="40dp"
@@ -15,6 +14,7 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="102dp"
         android:spinnerMode="dropdown"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -82,11 +82,11 @@
         android:layout_marginStart="56dp"
         android:layout_marginTop="72dp"
         android:layout_marginEnd="55dp"
-        android:textSize="20dp"
         android:text="确认修改"
+        android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextNote2" />
 
@@ -98,7 +98,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="55dp"
         android:text="删除账单"
-        android:textColor="#FF0000"
+        android:textColor="#de3a39"
         android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"

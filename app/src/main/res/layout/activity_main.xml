@@ -36,12 +36,12 @@
         android:layout_height="149dp"
         android:layout_marginTop="124dp"
         android:alpha="0.1"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.535"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/images"
-        android:visibility="visible"/>
+        app:srcCompat="@drawable/images" />
 
     <TextView
         android:id="@+id/no_data"

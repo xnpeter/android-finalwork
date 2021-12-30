@@ -92,7 +92,7 @@ class MyDatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    //读取全部未删除的可见数据
+    //读取全部数据
     Cursor readAllData(){
         String query = "SELECT * FROM " + DB_TABLE;
         //String params = "deleted=?";
@@ -119,4 +119,40 @@ class MyDatabaseHelper extends SQLiteOpenHelper {
             Toast.makeText(context, "已删除", Toast.LENGTH_SHORT).show();
         }
     }
+
+    //删除主页上的全部数据
+    void deleteAllData() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        cv.put(KEY_DELETED,"true");
+        long result = db.update(DB_TABLE, cv, null, null);
+//        如果成功则显示相应Toast，失败亦然
+        if (result == -1) {
+            Toast.makeText(context, "删除失败", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context, "已全部删除", Toast.LENGTH_SHORT).show();
+        }
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

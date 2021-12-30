@@ -3,6 +3,6 @@
 
     <translate android:fromYDelta="100%"
         android:toYDelta="0%"
-        android:duration="800"
+        android:duration="600"
         android:icon="@drawable/ic_baseline_restore_from_trash_24"/>
 </set>

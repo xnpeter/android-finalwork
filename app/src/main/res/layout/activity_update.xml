@@ -7,31 +7,18 @@
     tools:context=".UpdateActivity">
 
     <Spinner
-        android:id="@+id/spinnerBillType2"
+        android:id="@+id/spinnerIncomeType2"
         android:layout_width="210dp"
         android:layout_height="40dp"
         android:layout_marginStart="99dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="68dp"
         android:layout_marginEnd="102dp"
-        android:spinnerMode="dropdown"
-        android:visibility="invisible"
+        android:entries="@array/incomeType"
+        android:prompt="@string/spinner_title_income"
+        android:spinnerMode="dialog"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/editTextType2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="99dp"
-        android:layout_marginEnd="102dp"
-        android:ems="10"
-        android:hint="类型"
-        android:inputType="text"
-        android:minHeight="48dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerBillType2" />
 
     <EditText
         android:id="@+id/editTextNote2"
@@ -59,7 +46,7 @@
         android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextType2" />
+        app:layout_constraintTop_toBottomOf="@+id/spinnerIncomeType2" />
 
     <EditText
         android:id="@+id/editTextDate2"

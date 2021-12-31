@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="incomeType">
+        <item>奖学金</item>
+        <item>补助金</item>
+        <item>比赛奖金</item>
+        <item>业余兼职</item>
+        <item>基本工资</item>
+        <item>福利分红</item>
+        <item>加班津贴</item>
+        <item>其他</item>
+    </array>
+</resources>

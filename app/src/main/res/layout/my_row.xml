@@ -50,7 +50,7 @@
 
             <TextView
                 android:id="@+id/text_note"
-                android:layout_width="191dp"
+                android:layout_width="180dp"
                 android:layout_height="53dp"
                 android:layout_centerInParent="true"
                 android:text="这是一个note" />

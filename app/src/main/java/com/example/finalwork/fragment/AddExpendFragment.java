@@ -1,84 +1,120 @@
-package com.example.finalwork;
+package com.example.finalwork.fragment;
 
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
+
+import androidx.fragment.app.Fragment;
+
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
-import com.google.android.material.datepicker.MaterialStyledDatePickerDialog;
+import com.example.finalwork.AddActivity;
+import com.example.finalwork.MainActivity;
+import com.example.finalwork.MyDatabaseHelper;
+import com.example.finalwork.R;
 
 import java.lang.reflect.Method;
 import java.util.Calendar;
 
-public class AddActivity extends AppCompatActivity {
+/**
+ * A simple {@link Fragment} subclass.
+ * Use the {@link AddExpendFragment#newInstance} factory method to
+ * create an instance of this fragment.
+ */
+public class AddExpendFragment extends Fragment {
 
+    // TODO: Rename parameter arguments, choose names that match
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
 
-    //记录下拉菜单选择的账单类型
-    //private String selectedType;
+    // TODO: Rename and change types of parameters
+    private String mParam1;
+    private String mParam2;
+
+    public AddExpendFragment() {
+        // Required empty public constructor
+    }
+
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @param param1 Parameter 1.
+     * @param param2 Parameter 2.
+     * @return A new instance of fragment AddExpendFragment.
+     */
+
     AddActivity activity;
     private Context context;
-    private Spinner inputIncomeType;
-    private EditText  inputAmount, inputDate, inputNote;
+    private Spinner inputExpendType;
+    private EditText inputAmount, inputDate, inputNote;
     DatePickerDialog.OnDateSetListener setListener;
     Button addButton;
-    String input_type="", input_amount="", input_date="", input_note="";
+    String input_type = "", input_amount = "", input_date = "", input_note = "";
 
-    @Override
-    public boolean onMenuOpened(int featureId, Menu menu)
-    {
-        if(featureId == Window.FEATURE_ACTION_BAR && menu != null){
-            if(menu.getClass().getSimpleName().equals("MenuBuilder")){
-                try{
+
+    public boolean onMenuOpened(int featureId, Menu menu) {
+        if (featureId == Window.FEATURE_ACTION_BAR && menu != null) {
+            if (menu.getClass().getSimpleName().equals("MenuBuilder")) {
+                try {
                     Method m = menu.getClass().getDeclaredMethod(
                             "setOptionalIconsVisible", Boolean.TYPE);
                     m.setAccessible(true);
                     m.invoke(menu, true);
-                }
-                catch(NoSuchMethodException e){
+                } catch (NoSuchMethodException e) {
 
-                }
-                catch(Exception e){
+                } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
             }
         }
-        return super.onMenuOpened(featureId, menu);
+        return getActivity().onMenuOpened(featureId, menu);
+    }
+
+    // TODO: Rename and change types and number of parameters
+    public static AddExpendFragment newInstance(String param1, String param2) {
+        AddExpendFragment fragment = new AddExpendFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add);
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
+    }
 
-        inputIncomeType = findViewById(R.id.spinnerIncomeType);
-        inputAmount = findViewById(R.id.editTextAmount);
-        inputDate = findViewById(R.id.editTextDate);
-        inputNote = findViewById(R.id.editTextNote);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
 
-        addButton = findViewById(R.id.add_button);
+        // Inflate the layout for this fragment
+        View v = inflater.inflate(R.layout.fragment_add_expend, container, false);
+        inputExpendType = v.findViewById(R.id.spinnerExpendType);
+        inputAmount = v.findViewById(R.id.editTextAmount);
+        inputDate = v.findViewById(R.id.editTextDate);
+        inputNote = v.findViewById(R.id.editTextNote);
 
-//        按钮默认为不可按下状态，只有在前三个输入框不为空时才能被按下
-//        实现方法：给每个edittext设置一个改变监听器，一改变就检查一遍是否符合条件
+        addButton = v.findViewById(R.id.add_button);
+
         addButton.setEnabled(false);
         inputAmount.addTextChangedListener(new TextWatcher() {
             @Override
@@ -91,9 +127,9 @@ public class AddActivity extends AppCompatActivity {
                 input_type = charSequence.toString().trim();
 //                Toast.makeText(AddActivity.this, input_type, Toast.LENGTH_SHORT).show();
                 //只有前三个输入框都有信息时才能按下按钮
-                if ((input_amount.length() != 0) && (input_date.length() != 0) ) {
+                if ((input_amount.length() != 0) && (input_date.length() != 0)) {
                     addButton.setEnabled(true);
-                }else {
+                } else {
                     addButton.setEnabled(false);
                 }
             }
@@ -113,9 +149,9 @@ public class AddActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 input_amount = charSequence.toString().trim();
                 //只有前三个输入框都有信息时才能按下按钮
-                if ((input_type.length() != 0) && (input_amount.length() != 0) && (input_date.length() != 0) ) {
+                if ((input_type.length() != 0) && (input_amount.length() != 0) && (input_date.length() != 0)) {
                     addButton.setEnabled(true);
-                }else {
+                } else {
                     addButton.setEnabled(false);
                 }
             }
@@ -135,9 +171,9 @@ public class AddActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 input_date = charSequence.toString().trim();
                 //只有前三个输入框都有信息时才能按下按钮
-                if ((input_type.length() != 0) && (input_amount.length() != 0) && (input_date.length() != 0) ) {
+                if ((input_type.length() != 0) && (input_amount.length() != 0) && (input_date.length() != 0)) {
                     addButton.setEnabled(true);
-                }else {
+                } else {
                     addButton.setEnabled(false);
                 }
             }
@@ -174,14 +210,14 @@ public class AddActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(
-                        AddActivity.this, new DatePickerDialog.OnDateSetListener(){
+                        getActivity(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                        month = month+1;
-                        String date = year+"/"+month+"/"+day;
+                        month = month + 1;
+                        String date = year + "/" + month + "/" + day;
                         inputDate.setText(date);
                     }
-                },year,month,day);
+                }, year, month, day);
                 datePickerDialog.show();
             }
         });
@@ -190,20 +226,18 @@ public class AddActivity extends AppCompatActivity {
         setListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
-                month = month+1;
-                String date = year+"/"+month+"/"+dayOfMonth;
+                month = month + 1;
+                String date = year + "/" + month + "/" + dayOfMonth;
                 inputDate.setText(date);
             }
         };
-
-
 
         //添加按钮的功能
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(AddActivity.this,MainActivity.class);
-                MyDatabaseHelper myDB = new MyDatabaseHelper(AddActivity.this);
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                MyDatabaseHelper myDB = new MyDatabaseHelper(getActivity());
 //                if (inputType.getText().length() != 0) {
 //                    input_type = inputType.getText().toString().trim();
 //                } else {
@@ -232,7 +266,7 @@ public class AddActivity extends AppCompatActivity {
 //                }else {
 //                    Toast.makeText(AddActivity.this, "数据不全", Toast.LENGTH_SHORT).show();
 //                }
-                myDB.addData(inputIncomeType.getSelectedItem().toString().trim(),
+                myDB.addData(inputExpendType.getSelectedItem().toString().trim(),
                         inputAmount.getText().toString().trim(),
                         inputDate.getText().toString().trim(),
                         inputNote.getText().toString().trim());
@@ -241,23 +275,7 @@ public class AddActivity extends AppCompatActivity {
 
             }
         });
+
+        return v;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

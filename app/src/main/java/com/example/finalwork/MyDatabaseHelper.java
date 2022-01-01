@@ -11,7 +11,7 @@ import androidx.annotation.Nullable;
 
 //一个帮助类，用来辅助建立、更新和打开数据库
 //有onCreate和onUpgrade两个必须重载的函数
-class MyDatabaseHelper extends SQLiteOpenHelper {
+public class MyDatabaseHelper extends SQLiteOpenHelper {
 
     //    声明数据库的基本信息，比如数据库名、表名与版本号
     private Context context;
@@ -28,7 +28,7 @@ class MyDatabaseHelper extends SQLiteOpenHelper {
     private static final String KEY_INCOME = "income";
     private static final String KEY_DELETED = "deleted";
 
-    MyDatabaseHelper(@Nullable Context context) {
+    public MyDatabaseHelper(@Nullable Context context) {
         super(context, DB_NAME, null, DB_VERSION);
         this.context = context;
     }
@@ -55,7 +55,7 @@ class MyDatabaseHelper extends SQLiteOpenHelper {
     }
 
     //    增添数据函数
-    void addData(String type, String amount, String date, String  note) {
+    public void addData(String type, String amount, String date, String note) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
@@ -75,7 +75,7 @@ class MyDatabaseHelper extends SQLiteOpenHelper {
 
 //    更新数据
 
-    void updateData(String row_id, String type, String amount, String date, String  note) {
+    public void updateData(String row_id, String type, String amount, String date, String note) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
@@ -106,7 +106,7 @@ class MyDatabaseHelper extends SQLiteOpenHelper {
     }
 
     //将数据放入回收站，标为删除状态
-    void deleteOneRow(String row_id) {
+    public void deleteOneRow(String row_id) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 

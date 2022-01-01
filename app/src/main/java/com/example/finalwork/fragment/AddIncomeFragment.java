@@ -1,49 +1,59 @@
-package com.example.finalwork;
+package com.example.finalwork.fragment;
 
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
+
+import androidx.fragment.app.Fragment;
+
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
-import com.google.android.material.datepicker.MaterialStyledDatePickerDialog;
+import com.example.finalwork.AddActivity;
+import com.example.finalwork.MainActivity;
+import com.example.finalwork.MyDatabaseHelper;
+import com.example.finalwork.ParentAddActivity;
+import com.example.finalwork.R;
 
 import java.lang.reflect.Method;
 import java.util.Calendar;
 
-public class AddActivity extends AppCompatActivity {
+/**
+ * A simple {@link Fragment} subclass.
+ * Use the {@link AddIncomeFragment#newInstance} factory method to
+ * create an instance of this fragment.
+ */
+public class AddIncomeFragment extends Fragment {
+
+    // TODO: Rename parameter arguments, choose names that match
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
+
+    // TODO: Rename and change types of parameters
+    private String mParam1;
+    private String mParam2;
 
 
-    //记录下拉菜单选择的账单类型
-    //private String selectedType;
     AddActivity activity;
     private Context context;
     private Spinner inputIncomeType;
-    private EditText  inputAmount, inputDate, inputNote;
+    private EditText inputAmount, inputDate, inputNote;
     DatePickerDialog.OnDateSetListener setListener;
     Button addButton;
     String input_type="", input_amount="", input_date="", input_note="";
 
-    @Override
+
     public boolean onMenuOpened(int featureId, Menu menu)
     {
         if(featureId == Window.FEATURE_ACTION_BAR && menu != null){
@@ -62,23 +72,53 @@ public class AddActivity extends AppCompatActivity {
                 }
             }
         }
-        return super.onMenuOpened(featureId, menu);
+        return getActivity().onMenuOpened(featureId, menu);
+    }
+
+
+    public AddIncomeFragment() {
+        // Required empty public constructor
+    }
+
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @param param1 Parameter 1.
+     * @param param2 Parameter 2.
+     * @return A new instance of fragment AddIncomeFragment.
+     */
+    // TODO: Rename and change types and number of parameters
+    public static AddIncomeFragment newInstance(String param1, String param2) {
+        AddIncomeFragment fragment = new AddIncomeFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add);
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
+    }
 
-        inputIncomeType = findViewById(R.id.spinnerIncomeType);
-        inputAmount = findViewById(R.id.editTextAmount);
-        inputDate = findViewById(R.id.editTextDate);
-        inputNote = findViewById(R.id.editTextNote);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View v = inflater.inflate(R.layout.fragment_add_income, container, false);
+        inputIncomeType = v.findViewById(R.id.spinnerIncomeType);
+        inputAmount = v.findViewById(R.id.editTextAmount);
+        inputDate = v.findViewById(R.id.editTextDate);
+        inputNote = v.findViewById(R.id.editTextNote);
 
-        addButton = findViewById(R.id.add_button);
+        addButton = v.findViewById(R.id.add_button);
 
-//        按钮默认为不可按下状态，只有在前三个输入框不为空时才能被按下
-//        实现方法：给每个edittext设置一个改变监听器，一改变就检查一遍是否符合条件
         addButton.setEnabled(false);
         inputAmount.addTextChangedListener(new TextWatcher() {
             @Override
@@ -174,7 +214,7 @@ public class AddActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(
-                        AddActivity.this, new DatePickerDialog.OnDateSetListener(){
+                        getActivity(), new DatePickerDialog.OnDateSetListener(){
                     @Override
                     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                         month = month+1;
@@ -196,14 +236,12 @@ public class AddActivity extends AppCompatActivity {
             }
         };
 
-
-
         //添加按钮的功能
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(AddActivity.this,MainActivity.class);
-                MyDatabaseHelper myDB = new MyDatabaseHelper(AddActivity.this);
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                MyDatabaseHelper myDB = new MyDatabaseHelper(getActivity());
 //                if (inputType.getText().length() != 0) {
 //                    input_type = inputType.getText().toString().trim();
 //                } else {
@@ -241,23 +279,7 @@ public class AddActivity extends AppCompatActivity {
 
             }
         });
+
+        return v;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,4 +1,4 @@
-package com.example.finalwork;
+package com.example.finalwork.adapter;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -8,13 +8,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.finalwork.ParentUpdateActivity;
+import com.example.finalwork.R;
+import com.example.finalwork.UpdateActivity;
 
 import java.util.ArrayList;
 
@@ -25,8 +27,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
 
     Animation translate_anim;
 
-    CustomAdapter(Activity activity, Context context, ArrayList text_id, ArrayList text_type,
-                  ArrayList text_amount, ArrayList text_date, ArrayList text_note){
+    public CustomAdapter(Activity activity, Context context, ArrayList text_id, ArrayList text_type,
+                         ArrayList text_amount, ArrayList text_date, ArrayList text_note){
         this.activity = activity;
         this.context = context;
         this.bill_id = text_id;
@@ -57,11 +59,11 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
         holder.txt_note.setText(String.valueOf(bill_note.get(position)));
 
 
-        //Recyclerview onClickListener
+        //点击账单条目时转到UpdateActivity
         holder.mainLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, UpdateActivity.class);
+                Intent intent = new Intent(context, ParentUpdateActivity.class);
                 //通过Intent将之前输入的数据数据传到“更改”界面
                 intent.putExtra("id", String.valueOf(bill_id.get(position)));
                 intent.putExtra("type", String.valueOf(bill_type.get(position)));

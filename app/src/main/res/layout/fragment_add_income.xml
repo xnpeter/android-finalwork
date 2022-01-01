@@ -4,10 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UpdateActivity">
+    tools:context=".fragment.AddIncomeFragment">
 
+    <!-- TODO: Update blank fragment layout -->
     <Spinner
-        android:id="@+id/spinnerIncomeType2"
+        android:id="@+id/spinnerIncomeType"
         android:layout_width="210dp"
         android:layout_height="40dp"
         android:layout_marginStart="99dp"
@@ -17,12 +18,13 @@
         android:prompt="@string/spinner_title_income"
         android:spinnerMode="dialog"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 
     <EditText
-        android:id="@+id/editTextAmount2"
+        android:id="@+id/editTextAmount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="99dp"
@@ -33,10 +35,10 @@
         android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerIncomeType2" />
+        app:layout_constraintTop_toBottomOf="@+id/spinnerIncomeType" />
 
     <EditText
-        android:id="@+id/editTextDate2"
+        android:id="@+id/editTextDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="99dp"
@@ -47,10 +49,10 @@
         android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextAmount2" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextAmount" />
 
     <EditText
-        android:id="@+id/editTextNote2"
+        android:id="@+id/editTextNote"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
@@ -61,37 +63,21 @@
         android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextDate2" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextDate" />
 
     <Button
-        android:id="@+id/update_button"
-        android:layout_width="match_parent"
+        android:id="@+id/add_button"
+        android:layout_width="300dp"
         android:layout_height="70dp"
         android:layout_marginStart="56dp"
         android:layout_marginTop="72dp"
         android:layout_marginEnd="55dp"
-        android:text="确认修改"
+        android:foregroundTint="@color/cyan_other_button"
+        android:text="添加"
         android:textSize="20dp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextNote2" />
-
-    <Button
-        android:id="@+id/delete_button"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_marginStart="56dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="55dp"
-        android:text="删除账单"
-        android:textColor="#de3a39"
-        android:textSize="20dp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/update_button" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextNote" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

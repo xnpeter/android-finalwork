@@ -8,6 +8,17 @@
         <item>基本工资</item>
         <item>福利分红</item>
         <item>加班津贴</item>
-        <item>其他</item>
+        <item>其他收入</item>
+    </array>
+    <array name="expendType">
+        <item>餐饮</item>
+        <item>衣物</item>
+        <item>旅游</item>
+        <item>理发</item>
+        <item>娱乐</item>
+        <item>交通</item>
+        <item>水电</item>
+        <item>送礼</item>
+        <item>其他支出</item>
     </array>
 </resources>

@@ -9,10 +9,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Finalwork">
         <activity
+            android:name=".ParentUpdateActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity"/>
+        <activity
+            android:name=".ParentAddActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
+        <activity
             android:name=".TrashbinActivity"
+            android:exported="false"
             android:label="回收站"
-            android:parentActivityName=".MainActivity"
-            android:exported="false" />
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".UpdateActivity"
             android:exported="false"

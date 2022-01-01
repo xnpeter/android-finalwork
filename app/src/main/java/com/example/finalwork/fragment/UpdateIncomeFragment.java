@@ -3,6 +3,7 @@ package com.example.finalwork.fragment;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
@@ -15,12 +16,10 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.example.finalwork.MainActivity;
 import com.example.finalwork.MyDatabaseHelper;
 import com.example.finalwork.R;
-import com.example.finalwork.UpdateActivity;
 
 import java.util.Calendar;
 
@@ -46,6 +45,7 @@ public class UpdateIncomeFragment extends Fragment {
     DatePickerDialog.OnDateSetListener setListener;
     Button updateButton, deleteButton;
     String id, type, amount, date, note;
+
 
     public UpdateIncomeFragment() {
         // Required empty public constructor
@@ -138,7 +138,7 @@ public class UpdateIncomeFragment extends Fragment {
                 amount = inputAmount.getText().toString().trim();
                 date = inputDate.getText().toString().trim();
                 note = inputNote.getText().toString().trim();
-                myDB.updateData(id, type, amount, date, note);
+                myDB.updateData(id, type, amount, date, note,"true");
                 //添加完毕后自动返回主页
                 startActivityForResult(intent, 1);
             }
@@ -163,6 +163,8 @@ public class UpdateIncomeFragment extends Fragment {
             amount = getActivity().getIntent().getStringExtra("amount");
             date = getActivity().getIntent().getStringExtra("date");
             note = getActivity().getIntent().getStringExtra("note");
+
+
 //            将当前的输入框设置为传过来的数据
 
             //获取相应选项在spinner中对应的position

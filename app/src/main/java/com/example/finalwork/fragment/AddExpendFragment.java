@@ -19,7 +19,6 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import com.example.finalwork.AddActivity;
 import com.example.finalwork.MainActivity;
 import com.example.finalwork.MyDatabaseHelper;
 import com.example.finalwork.R;
@@ -56,7 +55,6 @@ public class AddExpendFragment extends Fragment {
      * @return A new instance of fragment AddExpendFragment.
      */
 
-    AddActivity activity;
     private Context context;
     private Spinner inputExpendType;
     private EditText inputAmount, inputDate, inputNote;
@@ -269,7 +267,8 @@ public class AddExpendFragment extends Fragment {
                 myDB.addData(inputExpendType.getSelectedItem().toString().trim(),
                         inputAmount.getText().toString().trim(),
                         inputDate.getText().toString().trim(),
-                        inputNote.getText().toString().trim());
+                        inputNote.getText().toString().trim(),
+                        "false");
 
                 startActivityForResult(intent, 1);
 

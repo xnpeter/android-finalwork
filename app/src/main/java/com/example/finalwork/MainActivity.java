@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     TextView no_data;
 
     MyDatabaseHelper myDB;
-    ArrayList<String> bill_id, bill_type, bill_amount, bill_date, bill_note, bill_deleted;
+    ArrayList<String> bill_id, bill_type, bill_amount, bill_date, bill_note;
     CustomAdapter customAdapter;
 
     @Override
@@ -65,7 +65,6 @@ public class MainActivity extends AppCompatActivity {
         bill_amount = new ArrayList<>();
         bill_date = new ArrayList<>();
         bill_note = new ArrayList<>();
-        bill_deleted = new ArrayList<>();
 
         storeDataInArrays();
         //if (bill_deleted.get())
@@ -88,10 +87,7 @@ public class MainActivity extends AppCompatActivity {
             int position = viewHolder.getAdapterPosition();
             String  id;
 
-//            bill_type.remove(position);
-//            bill_amount.remove(position);
-//            bill_date.remove(position);
-//            bill_note.remove(position);
+
 
             id = bill_id.get(position);
             MyDatabaseHelper myDB = new MyDatabaseHelper(MainActivity.this);
@@ -127,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
     //将数据从数据可存放到Array中
 //    统计未删除状态的记录个数，如果为0则显示相应信息
     void storeDataInArrays() {
-        int count = 0;
+        int billCount = 0;
         Cursor cursor = myDB.readAllData();
         if (cursor.getCount() == 0) {
 
@@ -137,13 +133,18 @@ public class MainActivity extends AppCompatActivity {
                 if (cursor.getString(6).equals("false")) {
                     bill_id.add(cursor.getString(0));
                     bill_type.add(cursor.getString(1));
-                    bill_amount.add(cursor.getString(2));
+                    //如果income属性为true，则加上一个加号，否则加一个减号
+                    if (cursor.getString(5).equals("true")) {
+                        bill_amount.add("+" + cursor.getString(2));
+                    } else {
+                        bill_amount.add("-" + cursor.getString(2));
+                    }
                     bill_date.add(cursor.getString(3));
                     bill_note.add(cursor.getString(4));
-                    count++;
+                    billCount++;
                 }
             }
-            if (count == 0) {
+            if (billCount == 0) {
                 //如果没有数据，将“没有账单”的图片和文字设为可见
                 //Toast.makeText(this, "No visible data", Toast.LENGTH_SHORT).show();
                 empty_imageView.setVisibility(View.VISIBLE);

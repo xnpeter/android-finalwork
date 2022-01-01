@@ -10,13 +10,14 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.finalwork.MainActivity;
 import com.example.finalwork.ParentUpdateActivity;
 import com.example.finalwork.R;
-import com.example.finalwork.UpdateActivity;
 
 import java.util.ArrayList;
 
@@ -67,7 +68,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
                 //通过Intent将之前输入的数据数据传到“更改”界面
                 intent.putExtra("id", String.valueOf(bill_id.get(position)));
                 intent.putExtra("type", String.valueOf(bill_type.get(position)));
-                intent.putExtra("amount", String.valueOf(bill_amount.get(position)));
+                //去掉amount第一位的符号
+                intent.putExtra("amount", String.valueOf(bill_amount.get(position)).substring(1));
                 intent.putExtra("date", String.valueOf(bill_date.get(position)));
                 intent.putExtra("note", String.valueOf(bill_note.get(position)));
                 activity.startActivityForResult(intent, 1);
@@ -100,15 +102,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
             //设置动画
             //mainLayout.setAnimation(translate_anim);
         }
-    }
-
-    public void RemoveItem(int position) {
-        bill_type.remove(position);
-        bill_amount.remove(position);
-        bill_date.remove(position);
-        bill_note.remove(position);
-
-
     }
 
 }

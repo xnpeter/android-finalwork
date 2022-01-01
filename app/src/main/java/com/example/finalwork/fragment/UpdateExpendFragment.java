@@ -133,7 +133,7 @@ public class UpdateExpendFragment extends Fragment {
                 amount = inputAmount.getText().toString().trim();
                 date = inputDate.getText().toString().trim();
                 note = inputNote.getText().toString().trim();
-                myDB.updateData(id, type, amount, date, note);
+                myDB.updateData(id, type, amount, date, note,"false");
                 //添加完毕后自动返回主页
                 startActivityForResult(intent, 1);
             }

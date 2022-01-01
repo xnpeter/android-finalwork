@@ -25,7 +25,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     private static final String KEY_AMOUNT = "amount";
     private static final String KEY_DATE = "date";
     private static final String KEY_NOTE = "note";
-    private static final String KEY_INCOME = "income";
+    private static final String KEY_INCOME = "is_income";
     private static final String KEY_DELETED = "deleted";
 
     public MyDatabaseHelper(@Nullable Context context) {
@@ -54,8 +54,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    //    增添数据函数
-    public void addData(String type, String amount, String date, String note) {
+    //    增添数据
+    public void addData(String type, String amount, String date, String note, String is_income) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
@@ -63,6 +63,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         cv.put(KEY_AMOUNT,amount);
         cv.put(KEY_DATE,date);
         cv.put(KEY_NOTE,note);
+        cv.put(KEY_INCOME,is_income);
         cv.put(KEY_DELETED,"false");
         long result = db.insert(DB_TABLE,null,cv);
 //        如果成功则显示相应Toast，失败亦然
@@ -75,7 +76,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
 //    更新数据
 
-    public void updateData(String row_id, String type, String amount, String date, String note) {
+    public void updateData(String row_id, String type, String amount, String date, String note, String is_income) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
@@ -83,6 +84,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         cv.put(KEY_AMOUNT,amount);
         cv.put(KEY_DATE,date);
         cv.put(KEY_NOTE,note);
+        cv.put(KEY_INCOME,is_income);
         long result = db.update(DB_TABLE, cv, "_id=?", new String[]{row_id});
 //        如果成功则显示相应Toast，失败亦然
         if (result == -1) {
@@ -93,7 +95,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     }
 
     //读取全部数据
-    Cursor readAllData(){
+    public Cursor readAllData(){
         String query = "SELECT * FROM " + DB_TABLE;
         //String params = "deleted=?";
         SQLiteDatabase db = this.getReadableDatabase();
@@ -119,6 +121,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             Toast.makeText(context, "已删除", Toast.LENGTH_SHORT).show();
         }
     }
+
 
     //将数据从回收站收回，标为not deleted状态
     void recycleOneRow(String row_id) {

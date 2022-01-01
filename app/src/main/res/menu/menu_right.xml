@@ -9,5 +9,7 @@
     <item android:id="@+id/trashBin"
         android:title="回收站"
         android:icon="@drawable/ic_baseline_restore_from_trash_24"/>
+    <item android:id="@+id/passwordSetting"
+        android:title="密码设置" />
 
 </menu>

@@ -17,4 +17,5 @@
     <color name="cyan_add_button">#66a9e0</color>
     <color name="cyan_other_button">#50a7ea</color>
     <color name="error_red">#dc7e7d</color>
+    <color name="gray">#4b4b4b</color>
 </resources>

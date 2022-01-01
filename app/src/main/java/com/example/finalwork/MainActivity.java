@@ -175,6 +175,9 @@ public class MainActivity extends AppCompatActivity {
         } else if (item.getItemId() == R.id.trashBin) {
             Intent intent = new Intent(MainActivity.this, TrashbinActivity.class);
             startActivity(intent);
+        } else if (item.getItemId() == R.id.passwordSetting) {
+            Intent intent = new Intent(MainActivity.this, PasswordSettingActivity.class);
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }

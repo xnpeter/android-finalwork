@@ -9,9 +9,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Finalwork">
         <activity
+            android:name=".LoginActivity"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".PasswordSettingActivity"
+            android:exported="false" />
+        <activity
             android:name=".ParentUpdateActivity"
             android:exported="false"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".ParentAddActivity"
             android:exported="false"
@@ -25,11 +37,7 @@
             android:name=".MainActivity"
             android:exported="true"
             android:label="诺米记账">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 

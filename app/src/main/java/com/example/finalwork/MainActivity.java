@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
 
+
         //添加按钮
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override

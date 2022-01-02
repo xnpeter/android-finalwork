@@ -19,6 +19,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     private static final int DB_VERSION = 1;
 
     private static final String DB_TABLE = "bill";
+    private static final String DB_TABLE2 = "passwordTable";
     //    各个属性名称：id、金额、日期、便签、类型
     private static final String KEY_ID = "_id";
     private static final String KEY_TYPE = "type";
@@ -27,6 +28,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     private static final String KEY_NOTE = "note";
     private static final String KEY_INCOME = "is_income";
     private static final String KEY_DELETED = "deleted";
+
+    private static final String KEY_PASSWORD = "password";
 
     public MyDatabaseHelper(@Nullable Context context) {
         super(context, DB_NAME, null, DB_VERSION);
@@ -45,6 +48,15 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                 KEY_INCOME + " TEXT, " +
                 KEY_DELETED + " TEXT);";
         db.execSQL(DB_CREATE);//创建表
+
+        String DB_CREATE2 = "CREATE TABLE " + DB_TABLE2 +
+                " (" + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                KEY_PASSWORD + " TEXT);";
+        db.execSQL(DB_CREATE2);//创建表
+
+//        默认密码为空
+        ContentValues cv = new ContentValues();
+        cv.put(KEY_PASSWORD,"password");
     }
 
     @Override
@@ -167,6 +179,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             Toast.makeText(context, "已全部清除", Toast.LENGTH_SHORT).show();
         }
     }
+
 }
 
 

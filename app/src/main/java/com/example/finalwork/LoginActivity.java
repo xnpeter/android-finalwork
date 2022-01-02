@@ -82,6 +82,7 @@ public class LoginActivity extends AppCompatActivity {
                 finish();
             } else {
                 Toast.makeText(LoginActivity.this, "密码错误", Toast.LENGTH_SHORT).show();
+                txtPassword.setText("");
             }
         }catch (FileNotFoundException e){
             e.printStackTrace();
